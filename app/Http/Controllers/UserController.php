@@ -35,7 +35,7 @@ class UserController extends Controller
                 $query->orderBy($orderBy);
             }
         } else{
-            $query->orderBy('id', 'asc');
+            $query->orderBy('id');
         }
 
 //        pagination

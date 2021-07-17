@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UserRequest extends FormRequest
+class CustomerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,17 +27,22 @@ class UserRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'name'     => 'required|string',
-                    'email'    => 'required|string|email|unique:users',
-                    'password' => 'required|string'
+                    'name'    => 'required|string',
+                    'surname' => 'required|string',
+                    'photo'   => [
+                        'image',
+                        Rule::dimensions()->maxWidth(500)->maxHeight(500)
+                    ],
                 ];
             case 'PUT':
             case 'PATCH':
-                $user_id = $this->route('user')->id;
                 return [
-                    'name'     => 'string',
-                    'email'    => 'string|email|unique:users,email,'.$user_id,
-                    'password' => 'string'
+                    'name'    => 'string',
+                    'surname' => 'string',
+                    'photo'   => [
+                        'image',
+                        Rule::dimensions()->maxWidth(500)->maxHeight(500)
+                    ],
                 ];
             default:
                 return [];
