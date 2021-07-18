@@ -95,7 +95,7 @@ class UserController extends Controller
     }
 
     /**
-     * This role can assign and revoke the 'Admin' role
+     * This route can assign and revoke the 'Admin' role
      */
     public function changeAdminRole(User $user): JsonResponse
     {

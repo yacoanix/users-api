@@ -1,62 +1,419 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# CRM API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+In this API you can manage a CRM in which you can create a customer database. There may be more than one user who can manage this list of clients, and these users will be managed by a user with 'Admin' role.
 
-## About Laravel
+## API Resources
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- For all API requests, the following headers must be added:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```json
+{
+    "headers": {
+        "Content-Type": "application/json",
+        "X-Requested-With": "XMLHttpRequest"
+    }
+}
+```
+- This API is created with an OAuth 2 authentication protocol. For almost all requests (except Login) it will be necessary to be authenticated. For this you will have to add the header 'Authorization' with the parameters 'token_type' and 'access_token' that the Login returns. Example:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```json
+{
+    "headers": {
+        "Content-Type": "application/json",
+        "X-Requested-With": "XMLHttpRequest",
+        "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOGNiMDdmZDM5MzRkYmNiMGQwNzE3MGJlMWM3OWVjMDc1NjIwZGFkNzM4MTkxZTg0NmJjZDZkY2MxOWYwZTY5MzhjM2YzYjI3YjcwNzQxZTkiLCJpYXQiOjE2MjY1NDAxODkuNzM2NTQ5LCJuYmYiOjE2MjY1NDAxODkuNzM2NTUyLCJleHAiOjE2NTgwNzYxODkuNzI1Njc5LCJzdWIiOiIxMiIsInNjb3BlcyI6W119.sHiMki0FIChyQjoiHwVFVV0Kkrn_DsMHxgp4jxzGrlG4Uq4_LEjMKO0exYOA68uQRYB1WYpYsfvNGFYErK8ERRMlI7S_4Vkhm16N5-Dy7hwiOlkMbz74bTFXj9HN1MLpOdEkQTrQghgEmqw1nQTk6Y1BzIpoMdHPjG8dwegzIQDigY6tmOsQp1CRWF3CjKVCGNYli1LPxoEIRIv3dO-bT9yccQwalmWi2d_2JO20JVu03qTkmlruKSq-cFHxQBzF3auUcIY9GfJiiWgr4YeGddDWL5D-kjLEHVs9nT8bPbmYxnazeR_hhmiJmXR99V8B-2gzy2Hz0viSo7bi9bSDB1YHta6u5QcgAsHUMzGbDtouzLqnDgqIfcfFKoXFHEpDHfskHYM9Mz0s1nIqlWjO2dEzfJvj9kDyDukHMl1eMpWJiPy6zVhl37f3oWFXo8d-TFwFt5stCHOogQqyuhG3HamnmPHKgR7EfHbe652-zxBfIGevBTQhYDV92bwjbP4YFCyQdKXwZ9kmSLm6CYxb096yU34awnyk0QtTG9ZYQAAn6n8oyVeRPGhzjgvWBk-NSk8xAtb-pdSowBQeo7NdjUKeh1CEil3ekQS7DArDoQvcpijKX5PSE7m8VedLPAq-gu9k5CuaBoUcInhqf6Kz8eYIdjRUW9-XDzp_mfki058"
+    }
+}
+```
 
-## Learning Laravel
+### Authentication
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+#### Login
+**- URL:**
+```url
+POST: http://www.yacoanix.com/api/v1/auth/login
+```
+**- Parameters:**
+- email: (String, Required) User email.
+- password: (String, Required) User password.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**- Response:**
+```json
+{
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNDM3MzVmYTUzMTAyMjc5ZmRkNTNmYTY3Nzc4ZTNkMjdiNThkNWRmNTZhNTU0ZjMyY2RjYTMwNDEzNGZkNzEzZjRjMTJjMWI0YzE2YzlmNjEiLCJpYXQiOjE2MjY2MjY2NzAuODY3MTEzLCJuYmYiOjE2MjY2MjY2NzAuODY3MTE3LCJleHAiOjE2NTgxNjI2NzAuODU5NTQxLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.pOTdp2WjA_p6qNiUTJaeOR1iSVBcwnaEIT-33N9wVhyDcqEWf_XmbETfN493E4wraG0zWLAngibe155uUzVbaqBuxEx6BOOhLUNozZ-_PVFXfHxl61LSRIPFNTNkCEI2RMcDQCRef8BnUewHyq8ZpQFalGXH0g64GjxVJwmUSTUsHNRqNp2LGJnBP45r9N59Hgj3jcDPKdcrOu-DEfqh2VxbmEEsM2f5cq0Osofo0YBpuDXepwqfHYd-zvW8iBj18F7kvokdZ0LXU_wL7Yz1ORQZ7ZRW6dNNDp1tggI8GtFrL0bTLZ3w0u_7PptiPUpFAb-vjP4uvAOVXBryOckA8l1nkV1R6Inn5ZoA_gCeoJqMwXuHPZO5vZbi7zMhJ20iuo6D5zZlRhrnMtK5C_HL2esbESn2h6E1JD7YXbtQWxs2I7fFPyjBnq0zLAtYwJ4JjZBvc-TVmQMunXu3ieZd5rqnwT_3mBNmUPOPeRAR4l7sOaQCIg7spzDXWf55oFRijNPD9tJcoX76jKlBDr4og2IqT-bqnO-1dnGa6fqiPBURm60BUcCAuCmfmUYj2gSS03dBtVOH9frwpECktFSiAM4WEFtK4x_nq5qSx9e5NNtEfy2W0Gv1v2Kqzr7WYdirrqNggFq7orH3icAE5hhoCjo-x8nauqEHmKcx3_4A7zw",
+    "token_type": "Bearer",
+    "expires_at": "2022-07-18 16:44:30"
+}
+```
 
-## Laravel Sponsors
+#### Logout
+**- URL:**
+```url
+GET: http://www.yacoanix.com/api/v1/auth/logout
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+**- Response:**
+```json
+{
+    "message": "Successfully logged out"
+}
+```
 
-### Premium Partners
+### Users
+- Only a user with 'Admin' role will be able to use these routes.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+#### List users
+**- URL:**
+```url
+GET: http://www.yacoanix.com/api/v1/users
+```
+**- Parameters:**
+- name: (String, optional) Filter user name.
+- email: (String, optional) Filter user email.
+- sortBy: (String, optional) You can order by id, name or email.
+- sortDesc: (String, optional) If you pass a 'true' string, you can see the list in reverse order.
+- page: (Number, optional) If you pass this parameter, the list will be paginated by default at 10 users per page.
+- perPage: (Number, optional) Change default value users per page.
 
-## Contributing
+**- Response:**
+- The 'meta' and 'links' objects only appear if pagination exists.
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "admin",
+            "email": "admin@admin.es",
+            "is_admin": true
+        },
+        {
+            "id": 2,
+            "name": "Dr. Maia Kertzmann",
+            "email": "gerry.homenick@example.net",
+            "is_admin": false
+        },
+        {
+            "id": 3,
+            "name": "Reina Hilpert",
+            "email": "wolf.concepcion@example.org",
+            "is_admin": false
+        }
+    ],
+    "links": {
+        "first": "http://www.yacoanix.com/api/v1/users?page=1",
+        "last": "http://www.yacoanix.com/api/v1/users?page=1",
+        "prev": null,
+        "next": null
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "http://www.yacoanix.com/api/v1/users?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "path": "http://www.yacoanix.com/api/v1/users",
+        "per_page": 10,
+        "to": 5,
+        "total": 5
+    }
+}
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### Create user
+**- URL:**
+```url
+POST: http://www.yacoanix.com/api/v1/users
+```
+**- Parameters:**
+- name: (String, Required) User name.
+- email: (String, Required, unique) User email.
+- password: (String, Required) User password.
 
-## Code of Conduct
+**- Response:**
+```json
+{
+    "message": "Successfully created user!"
+}
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Update user
+**- URL:**
+```url
+PUT/PATCH: http://www.yacoanix.com/api/v1/users/{USER_ID}
+```
+**- Parameters:**
+- name: (String, Optional) New user name.
+- email: (String, Optional, unique) New user email.
+- password: (String, Optional) New user password.
 
-## Security Vulnerabilities
+**- Response:**
+```json
+{
+    "message": "Successfully updated user!"
+}
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### Delete user
+**- URL:**
+```url
+DELETE: http://www.yacoanix.com/api/v1/users/{USER_ID}
+```
 
-## License
+**- Response:**
+```json
+{
+    "message": "Successfully deleted user!"
+}
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### Change admin role
+
+- This route can assign and revoke the 'Admin' role to a user
+
+**- URL:**
+```url
+POST: http://www.yacoanix.com/api/v1/users/{USER_ID}/change-admin
+```
+
+**- Response:**
+```json
+{
+    "message": "Successfully assigned Admin role to user!"
+}
+```
+or
+
+```json
+{
+    "message": "Successfully revoked Admin role to user!"
+}
+```
+
+### Customers
+- Any user can manage customers.
+
+#### List customers
+**- URL:**
+```url
+GET: http://www.yacoanix.com/api/v1/customers
+```
+**- Parameters:**
+- name: (String, optional) Filter customer name.
+- surname: (String, optional) Filter customer surname.
+- sortBy: (String, optional) You can order by id, name or email.
+- sortDesc: (String, optional) If you pass a 'true' string, you can see the list in reverse order.
+- page: (Number, optional) If you pass this parameter, the list will be paginated by default at 10 customers per page.
+- perPage: (Number, optional) Change default value customers per page.
+
+**- Response:**
+- The 'meta' and 'links' objects only appear if pagination exists.
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "Otilia Kunze",
+            "surname": "Clare Powlowski",
+            "photo": null,
+            "creator_id": 4,
+            "updater_id": null
+        },
+        {
+            "id": 2,
+            "name": "Prof. Malcolm Osinski",
+            "surname": "Gail Kuphal IV",
+            "photo": null,
+            "creator_id": 3,
+            "updater_id": null
+        },
+        {
+            "id": 3,
+            "name": "Prof. Ella Satterfield PhD",
+            "surname": "Isabel Koch",
+            "photo": null,
+            "creator_id": 4,
+            "updater_id": null
+        },
+        {
+            "id": 4,
+            "name": "Dagmar Koepp",
+            "surname": "Gretchen Bins",
+            "photo": null,
+            "creator_id": 2,
+            "updater_id": null
+        },
+        {
+            "id": 5,
+            "name": "Norris Heaney",
+            "surname": "Kaitlyn Flatley",
+            "photo": null,
+            "creator_id": 5,
+            "updater_id": null
+        }
+    ],
+    "links": {
+        "first": "http://www.yacoanix.com/api/v1/customers?page=1",
+        "last": "http://www.yacoanix.com/api/v1/customers?page=4",
+        "prev": null,
+        "next": "http://www.yacoanix.com/api/v1/customers?page=2"
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 4,
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "http://www.yacoanix.com/api/v1/customers?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": "http://www.yacoanix.com/api/v1/customers?page=2",
+                "label": "2",
+                "active": false
+            },
+            {
+                "url": "http://www.yacoanix.com/api/v1/customers?page=3",
+                "label": "3",
+                "active": false
+            },
+            {
+                "url": "http://www.yacoanix.com/api/v1/customers?page=4",
+                "label": "4",
+                "active": false
+            },
+            {
+                "url": "http://www.yacoanix.com/api/v1/customers?page=2",
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "path": "http://www.yacoanix.com/api/v1/customers",
+        "per_page": "5",
+        "to": 5,
+        "total": 20
+    }
+}
+```
+
+#### Create customer
+**- URL:**
+```url
+POST: http://www.yacoanix.com/api/v1/customers
+```
+**- Parameters:**
+- name: (String, Required) Customer name.
+- surname: (String, Required, unique) Customer surname.
+- photo: (image, optional, max 500x500) Customer photo.
+
+**- Response:**
+```json
+{
+    "message": "Successfully created customer!"
+}
+```
+
+#### Update customer
+**- URL:**
+```url
+PUT/PATCH: http://www.yacoanix.com/api/v1/customers/{CUSTOMER_ID}
+```
+**- Parameters:**
+- name: (String, Optional) New customer name.
+- surname: (String, Optional) New customer surname.
+
+**- Response:**
+```json
+{
+    "message": "Successfully updated customer!"
+}
+```
+
+#### Delete customer
+**- URL:**
+```url
+DELETE: http://www.yacoanix.com/api/v1/customers/{CUSTOMER_ID}
+```
+
+**- Response:**
+```json
+{
+    "message": "Successfully deleted customer!"
+}
+```
+
+#### Show customer
+**- URL:**
+```url
+GET: http://www.yacoanix.com/api/v1/customers/{CUSTOMER_ID}
+```
+
+**- Response:**
+```json
+{
+    "data": {
+        "id": 1,
+        "name": "Otilia Kunze",
+        "surname": "Clare Powlowski",
+        "photo": "http://www.yacoanix.com/storage/customer_photos/qIzD6npZhNthVZ22UKDh9p542jb59kb6Lwdd0W1b.png",
+        "creator_id": 4,
+        "updater_id": null
+    }
+}
+```
+
+
+
+#### Upload customer photo
+**- URL:**
+```url
+POST: http://www.yacoanix.com/api/v1/customers/{CUSTOMER_ID}/upload-photo
+```
+
+**- Parameters:**
+- photo: (image, required, max 500x500) New customer photo.
+
+**- Response:**
+```json
+{
+    "message": "Successfully uploaded customer photo!"
+}
+```
+
+#### Delete customer photo
+**- URL:**
+```url
+DELETE: http://www.yacoanix.com/api/v1/customers/{CUSTOMER_ID}/delete-photo
+```
+
+**- Response:**
+```json
+{
+    "message": "Successfully deleted customer photo!"
+}
+```
+
+
+
+
+
