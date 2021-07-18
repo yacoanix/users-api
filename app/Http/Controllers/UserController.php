@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\JsonResponse;
@@ -12,7 +13,7 @@ use Auth;
 class UserController extends Controller
 {
 
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         $query = User::query();
 

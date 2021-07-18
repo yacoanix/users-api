@@ -31,6 +31,8 @@ Route::group(['middleware' => 'auth:api'], function() {
     });
 
 //    Customer routes
+    Route::post('customers/{customer}/upload-photo', [CustomerController::class, 'uploadPhoto']);
+    Route::delete('customers/{customer}/delete-photo', [CustomerController::class, 'deletePhoto']);
     Route::resource('customers', CustomerController::class)->except(['create', 'edit']);
 
 });

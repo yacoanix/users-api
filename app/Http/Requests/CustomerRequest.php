@@ -39,10 +39,6 @@ class CustomerRequest extends FormRequest
                 return [
                     'name'    => 'string',
                     'surname' => 'string',
-                    'photo'   => [
-                        'image',
-                        Rule::dimensions()->maxWidth(500)->maxHeight(500)
-                    ],
                 ];
             default:
                 return [];
