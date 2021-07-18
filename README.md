@@ -12,35 +12,35 @@ In this API you can manage a CRM in which you can create a customer database. Th
 - Clone the project on your machine.
 - Go to the root directory of the project and run the following command:
 
-```console
-composer install
+```
+$ composer install
 ```
 - Configure your .env file, more information about this [here](https://laravel.com/docs/8.x/configuration#environment-configuration).
 - Run the next commands:
-```console
-php artisan key:generate
 ```
-```console
-php artisan storage:link
+$ php artisan key:generate
+```
+```
+$ php artisan storage:link
 ```
 - Execute the migrations and seeders of the project (Before configuring the database values in your .env file).
-```console
-php artisan migrate --seed
 ```
-- And finally you need run this commands
-```console
-php artisan optimize:clear
+$ php artisan migrate --seed
 ```
-```console
-php artisan passport:install
+- Finally you need run this commands
+```
+$ php artisan optimize:clear
+```
+```
+$ php artisan passport:install
 ```
 
-And the project is ready to use.
+- And the project is ready to use.
 
 ###Local Development Server
 
 If you have PHP installed locally and you would like to use PHP's built-in development server to serve your application, you may use the serve Artisan command. This command will start a development server at http://localhost:8000:
-```console
+```commands
 php artisan serve
 ```
 
