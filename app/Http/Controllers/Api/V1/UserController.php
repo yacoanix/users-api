@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\JsonResponse;
