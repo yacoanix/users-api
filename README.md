@@ -2,6 +2,48 @@
 
 In this API you can manage a CRM in which you can create a customer database. There may be more than one user who can manage this list of clients, and these users will be managed by a user with 'Admin' role.
 
+## Install Project
+
+### Requirements
+- PHP >= 7.3
+- Laravel utilizes Composer to manage its dependencies. So, before using Laravel, make sure you have [Composer](https://getcomposer.org/) installed on your machine.
+
+### Instructions
+- Clone the project on your machine.
+- Go to the root directory of the project and run the following command:
+
+```console
+composer install
+```
+- Configure your .env file, more information about this [here](https://laravel.com/docs/8.x/configuration#environment-configuration).
+- Run the next commands:
+```console
+php artisan key:generate
+```
+```console
+php artisan storage:link
+```
+- Execute the migrations and seeders of the project (Before configuring the database values in your .env file).
+```console
+php artisan migrate --seed
+```
+- And finally you need run this commands
+```console
+php artisan optimize:clear
+```
+```console
+php artisan passport:install
+```
+
+And the project is ready to use.
+
+###Local Development Server
+
+If you have PHP installed locally and you would like to use PHP's built-in development server to serve your application, you may use the serve Artisan command. This command will start a development server at http://localhost:8000:
+```console
+php artisan serve
+```
+
 ## API Resources
 
 - For all API requests, the following headers must be added:

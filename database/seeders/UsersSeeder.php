@@ -25,6 +25,8 @@ class UsersSeeder extends Seeder
 
         $user->assignRole('Admin');
 
-        User::factory(4)->create();
+        if(env('APP_ENV') === 'local'){
+            User::factory(4)->create();
+        }
     }
 }
