@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
             case 'POST':
                 return [
                     'name'     => 'required|string',
-                    'email'    => 'required|string|email|unique:users',
+                    'email'    => 'required|string|email:filter|unique:users',
                     'password' => 'required|string'
                 ];
             case 'PUT':
@@ -35,7 +35,7 @@ class UserRequest extends FormRequest
                 $user_id = $this->route('user')->id;
                 return [
                     'name'     => 'string',
-                    'email'    => 'string|email|unique:users,email,'.$user_id,
+                    'email'    => 'string|email:filter|unique:users,email,'.$user_id,
                     'password' => 'string'
                 ];
             default:
